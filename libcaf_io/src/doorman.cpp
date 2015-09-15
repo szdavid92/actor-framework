@@ -27,20 +27,13 @@ namespace caf {
 namespace io {
 
 doorman::doorman(abstract_broker* ptr, accept_handle acc_hdl, uint16_t p)
-    : network::acceptor_manager(ptr),
-      hdl_(acc_hdl),
-      accept_msg_(make_message(new_connection_msg{hdl_, connection_handle{}})),
+    : doorman_base(ptr, acc_hdl),
       port_(p) {
   // nop
 }
 
 doorman::~doorman() {
   // nop
-}
-
-void doorman::detach_from_parent() {
-  CAF_LOG_TRACE("hdl = " << hdl().id());
-  parent()->doormen_.erase(hdl());
 }
 
 message doorman::detach_message() {
